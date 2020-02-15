@@ -11,7 +11,8 @@ static HELLO: &[u8] = b"Hello World!";
 
 /// This function is called on panic.
 #[panic_handler]
-fn panic(_info: &PanicInfo) -> ! {
+fn panic(info: &PanicInfo) -> ! {
+    println!("{}", info);
     loop {}
 }
 
@@ -31,5 +32,7 @@ pub extern "C" fn _start() -> ! {
     //vga_buffer::print_something();
     use core::fmt::Write;
     vga_buffer::WRITER.lock().write_str("Hello again").unwrap();
+    println!("yumao{}","!");
+    panic!("Some panic message");
     loop {}
 }
