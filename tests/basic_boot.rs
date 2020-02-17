@@ -8,10 +8,7 @@ use core::panic::PanicInfo;
 
 #[no_mangle] // don't mangle the name of this function
 pub extern "C" fn _start() -> ! {
-    blog_os::init(); // new
-
-    // invoke a breakpoint exception
-    x86_64::instructions::interrupts::int3(); // new
+    init();
     test_main();
 
     loop {}
@@ -31,7 +28,7 @@ fn panic(info: &PanicInfo) -> ! {
     blog_os::test_panic_handler(info)
 }
 
-use blog_os::{println, serial_print, serial_println};
+use blog_os::{println, serial_print, serial_println, init};
 
 #[test_case]
 fn test_println() {
