@@ -38,6 +38,13 @@ fn panic(info: &PanicInfo) -> ! {
 pub extern "C" fn _start() -> ! {
     blog_os::init();
 
+    fn stack_overflow() {
+        stack_overflow(); // for each recursion, the return address is pushed
+    }
+
+    // trigger a stack overflow
+    stack_overflow();
+
     // trigger a page fault
     unsafe {
         *(0xdeadbeef as *mut u64) = 42;
