@@ -9,7 +9,7 @@
 ```bash
 cargo install cargo-xbuild
 
-//其他依赖：
+#其他依赖：
 cargo install bootimage --version "^0.7.7"
 rustup component add llvm-tools-preview
 ```
