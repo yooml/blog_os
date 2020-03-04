@@ -17,13 +17,20 @@ lazy_static! (
         idt.breakpoint.set_handler_fn(breakpoint_handler);
         unsafe {
             idt.double_fault.set_handler_fn(double_fault_handler)
-                .set_stack_index(gdt::DOUBLE_FAULT_IST_INDEX); // new
+                .set_stack_index(gdt::DOUBLE_FAULT_IST_INDEX);
         }
+        idt[InterruptIndex::Timer.as_usize()]
+            .set_handler_fn(timer_interrupt_handler);
 
         idt
     };
 );
 
+extern "x86-interrupt" fn timer_interrupt_handler(
+    _stack_frame: &mut InterruptStackFrame)
+{
+    print!(".");
+}
 // new
 extern "x86-interrupt" fn double_fault_handler(
     stack_frame: &mut InterruptStackFrame, _error_code: u64) -> !
@@ -50,4 +57,20 @@ fn test_breakpoint_exception() {
     // invoke a breakpoint exception
     x86_64::instructions::interrupts::int3();
     serial_println!("[ok]");
+}
+
+#[derive(Debug, Clone, Copy)]
+#[repr(u8)]
+pub enum InterruptIndex {
+    Timer = PIC_1_OFFSET,
+}
+
+impl InterruptIndex {
+    fn as_u8(self) -> u8 {
+        self as u8
+    }
+
+    fn as_usize(self) -> usize {
+        usize::from(self.as_u8())
+    }
 }

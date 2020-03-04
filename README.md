@@ -4,6 +4,10 @@
 
 #### 如何构建：
 1.先要安装rust最新的nightly版本和qemu
+```bash
+rustup default nightly
+rustup toolchain list
+```
 
 2.然后安装xbuild用于交叉编译：
 ```bash
@@ -12,6 +16,7 @@ cargo install cargo-xbuild
 #其他依赖：
 cargo install bootimage --version "^0.7.7"
 rustup component add llvm-tools-preview
+rustup component add rust-src
 ```
 
 3.构建：
