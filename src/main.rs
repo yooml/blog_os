@@ -38,7 +38,7 @@ fn panic(info: &PanicInfo) -> ! {
 pub extern "C" fn _start() -> ! {
     blog_os::init();
 
-    fn stack_overflow() {
+    /*fn stack_overflow() {
         stack_overflow(); // for each recursion, the return address is pushed
     }
 
@@ -51,10 +51,14 @@ pub extern "C" fn _start() -> ! {
     };
     // invoke a breakpoint exception
     x86_64::instructions::interrupts::int3(); // new
+    */
     #[cfg(test)]
         test_main();
     //panic!("Some panic message");
-    loop {}
+    loop {
+        use blog_os::print;
+        print!("-");
+    }
 }
 
 
