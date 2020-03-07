@@ -22,7 +22,8 @@ fn panic(info: &PanicInfo) -> ! {
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     println!("{}", info);
-    loop {}
+    //loop {}
+    blog_os::hlt_loop();
 }
 
 #[cfg(test)]
@@ -55,10 +56,12 @@ pub extern "C" fn _start() -> ! {
     #[cfg(test)]
         test_main();
     //panic!("Some panic message");
-    loop {
+    /*loop {
         use blog_os::print;
         print!("-");
-    }
+    }*/
+    println!("It did not crash!");
+    blog_os::hlt_loop();
 }
 
 
