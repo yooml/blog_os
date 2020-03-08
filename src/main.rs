@@ -53,6 +53,19 @@ pub extern "C" fn _start() -> ! {
     // invoke a breakpoint exception
     x86_64::instructions::interrupts::int3(); // new
     */
+    use x86_64::registers::control::Cr3;
+
+    let (level_4_page_table, _) = Cr3::read();
+    println!("Level 4 page table at: {:?}", level_4_page_table.start_address());
+    let ptr = 0x2031b2 as *mut u32;
+
+// read from a code page
+    unsafe { let x = *ptr; }
+    println!("read worked");
+
+// write to a code page
+    unsafe { *ptr = 42; }
+    println!("write worked");
     #[cfg(test)]
         test_main();
     //panic!("Some panic message");
