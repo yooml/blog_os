@@ -38,13 +38,13 @@ pub fn create_example_mapping(
     map_to_result.expect("map_to failed").flush();
 }
 
-pub struct EmptyFrameAllocator;
+/*pub struct EmptyFrameAllocator;
 
 unsafe impl FrameAllocator<Size4KiB> for EmptyFrameAllocator {
     fn allocate_frame(&mut self) -> Option<UnusedPhysFrame> {
         None
     }
-}
+}*/
 /// Returns a mutable reference to the active level 4 table.
 ///
 /// This function is unsafe because the caller must guarantee that the
